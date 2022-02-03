@@ -1,0 +1,437 @@
+﻿<Window x:Class="MatrixXAMLOnly.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MatrixXAMLOnly"
+        mc:Ignorable="d"
+        Title="Калькулятор: матрицы" Height="700" Width="1100" Icon="Images\matrix_icon.ico" MinHeight="500" MinWidth="800" x:Name="Window">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}" x:Key="HamburgerBtn">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="#373737" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="1" Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2.5*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="0.8*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="0.8*"/>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="2.5*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="6*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+
+                                <Rectangle Grid.Row="1" Grid.Column="1" Fill="#373737" RadiusX="2" RadiusY="2"/>
+                                <Rectangle Grid.Row="3" Grid.Column="1" Fill="#373737" RadiusX="2" RadiusY="2"/>
+                                <Rectangle Grid.Row="5" Grid.Column="1" Fill="#373737" RadiusX="2" RadiusY="2"/>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#cccdc6" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#e8e9eb" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="HamburgerMenuItemBtn">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#373737"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="MinHeight" Value="40"/>
+            <Setter Property="Cursor" Value="Hand"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border BorderThickness="0 0 0 1" BorderBrush="#373737">
+                            <Grid>
+                                <TextBlock x:Name="TextBlockTemplateHamburgerMenuItem" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#cccdc6"/>
+                                <Setter Property="Foreground" Value="Black" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#e8e9eb" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBlock}" x:Key="OperationSign">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="#373737"/>
+            <Setter Property="FontSize" Value="40"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+    </Window.Resources>
+    
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <!-- CurtainMenu -->
+        <Grid x:Name="CurtainMenu" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="3" Width="0" HorizontalAlignment="Left" Background="#FFE8E9EB" Opacity="0.95">
+            <StackPanel Margin="0 70 0 0" Orientation="Vertical">
+                <Button Content="Сложение матрицы" Style="{StaticResource HamburgerMenuItemBtn}"/>
+                <Button Content="Вычитание матрицы" Style="{StaticResource HamburgerMenuItemBtn}"/>
+                <Button Content="Умножение матрицы на скаляр" Style="{StaticResource HamburgerMenuItemBtn}"/>
+                <Button Content="Транспонирование матрицы" Style="{StaticResource HamburgerMenuItemBtn}"/>
+                <Button Content="Умножение матрицы на её транспонированную матрицу" Style="{StaticResource HamburgerMenuItemBtn}"/>
+                <Button Content="Перестановка строк" Style="{StaticResource HamburgerMenuItemBtn}"/>
+                <Button Content="Перестановка строк согласно вектору транспозиции" Style="{StaticResource HamburgerMenuItemBtn}"/>
+                <Button Content="Обратная матрица" Style="{StaticResource HamburgerMenuItemBtn}"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Hamburger Button -->
+        <Button x:Name="BtnHamburgerMenu" Style="{StaticResource HamburgerBtn}" Panel.ZIndex="1" MinHeight="70" MaxHeight="70" MinWidth="70" MaxWidth="70" Cursor="Hand" Focusable="False" VerticalAlignment="Top" HorizontalAlignment="Left" Click="BtnHamburgerMenu_Click"/>
+
+        <!-- Addition -->
+        <Grid x:Name="GridContentAddition" Grid.RowSpan="3" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- UpperBody -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+            <!-- MidlleBody -->
+            <Grid Grid.Row="1">
+                <Border Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0 1 0 1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="GridAdditionFrstTerm" Grid.Column="0">
+                            
+                        </Grid>
+
+                        <TextBlock Text="+" Grid.Column="1" Style="{StaticResource OperationSign}"/>
+
+                        <Grid x:Name="GridAdditionScndTerm" Grid.Column="2">
+                            
+                        </Grid>
+
+                        <TextBlock Text="=" Grid.Column="3" Style="{StaticResource OperationSign}"/>
+
+                        <Grid x:Name="GridAdditionResult" Grid.Column="4">
+                            
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- BottomBody -->
+            <Grid Grid.Row="2">
+
+            </Grid>
+        </Grid> <!-- Addition -->
+
+        <!-- Difference -->
+        <Grid x:Name="GridContentDifference" Grid.RowSpan="3" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- UpperBody -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+            <!-- MidlleBody -->
+            <Grid Grid.Row="1">
+                <Border Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0 1 0 1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="GridDifferenceFrstTerm" Grid.Column="0">
+                            
+                        </Grid>
+
+                        <TextBlock Text="-" Grid.Column="1" Style="{StaticResource OperationSign}"/>
+
+                        <Grid x:Name="GridDifferenceScndTerm" Grid.Column="2">
+                            
+                        </Grid>
+
+                        <TextBlock Text="=" Grid.Column="3" Style="{StaticResource OperationSign}"/>
+
+                        <Grid x:Name="GridDifferenceResult" Grid.Column="4">
+                            
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- BottomBody -->
+            <Grid Grid.Row="2">
+
+            </Grid>
+        </Grid> <!-- Difference -->
+
+        <!-- MultiplicationOnScalar -->
+        <Grid x:Name="GridContentMultiplication" Grid.RowSpan="3" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- UpperBody -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+            <!-- MidlleBody -->
+            <Grid Grid.Row="1">
+                <Border Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0 1 0 1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="GridMultiplicationOnScalarFrstTerm" Grid.Column="0">
+
+                        </Grid>
+
+                        <TextBlock Text="*" Grid.Column="1" Style="{StaticResource OperationSign}" Margin="0 15 0 0"/>
+
+                        <TextBox x:Name="TextBoxMultiplicationOnScalarScndTerm" Grid.Column="2" Width="100" Height="100" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="SemiBold" MaxLength="8"/>
+
+                        <TextBlock Text="=" Grid.Column="3" Style="{StaticResource OperationSign}"/>
+
+                        <Grid x:Name="GridMultiplicationOnScalarResult" Grid.Column="4">
+
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- BottomBody -->
+            <Grid Grid.Row="2">
+
+            </Grid>
+        </Grid> <!-- MultiplicationOnScalar -->
+
+        <!-- Transpose -->
+        <Grid x:Name="GridContentTranspose" Grid.RowSpan="3" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- UpperBody -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+            <!-- MidlleBody -->
+            <Grid Grid.Row="1">
+                <Border Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0 1 0 1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.1*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="GridTransposeFrom" Grid.Column="0">
+
+                        </Grid>
+
+                        <TextBlock Text="=>" Grid.Column="1" Style="{StaticResource OperationSign}"/>
+
+                        <Grid x:Name="GridTransposed" Grid.Column="2">
+
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- BottomBody -->
+            <Grid Grid.Row="2">
+
+            </Grid>
+        </Grid> <!-- Transpose -->
+
+        <!-- MultiplicationOnTransposed -->
+        <Grid x:Name="GridContentMultiplicationOnTransposed" Grid.RowSpan="3" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- UpperBody -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+            <!-- MidlleBody -->
+            <Grid Grid.Row="1">
+                <Border Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0 1 0 1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.1*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="GridMultiplicationOnTransposedTerm" Grid.Column="0">
+
+                        </Grid>
+
+                        <TextBlock Text="=>" Grid.Column="1" Style="{StaticResource OperationSign}"/>
+
+                        <Grid x:Name="GridMultiplicationOnTransposedResult" Grid.Column="2">
+
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- BottomBody -->
+            <Grid Grid.Row="2">
+
+            </Grid>
+        </Grid> <!-- MultiplicationOnTransposed -->
+
+        <!-- RowsReplace -->
+        <Grid x:Name="GridContentRowsReplace" Grid.RowSpan="3" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- UpperBody -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+            </Grid>
+
+            <!-- MidlleBody -->
+            <Grid Grid.Row="1">
+                <Border Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0 1 0 1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.4*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="GridRowsReplaceMatrix" Grid.Column="0">
+                            
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+
+                            <TextBox x:Name="TextBoxRowReplaceFrstTerm" Grid.Row="0" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="SemiBold" MaxLength="2"/>
+
+                            <TextBlock Text="=>" Grid.Row="1" Style="{StaticResource OperationSign}"/>
+
+                            <TextBox x:Name="TextBoxRowReplaceScndTerm" Grid.Row="2" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="SemiBold" MaxLength="2"/>
+
+                        </Grid>
+
+                        <Grid x:Name="GridRowsReplaceResult" Grid.Column="2">
+
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- BottomBody -->
+            <Grid Grid.Row="2">
+
+            </Grid>
+        </Grid> <!-- RowsReplace -->
+        
+    </Grid>
+</Window>
