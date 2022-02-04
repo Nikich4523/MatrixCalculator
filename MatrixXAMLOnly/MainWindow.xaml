@@ -68,7 +68,7 @@
                     <ControlTemplate TargetType="{x:Type Button}">
                         <Border BorderThickness="0 0 0 1" BorderBrush="#373737">
                             <Grid>
-                                <TextBlock x:Name="TextBlockTemplateHamburgerMenuItem" Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"/>
+                                <TextBlock Text="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="NoWrap" TextAlignment="Center"/>
                             </Grid>
                         </Border>
 
@@ -108,14 +108,14 @@
         <!-- CurtainMenu -->
         <Grid x:Name="CurtainMenu" Panel.ZIndex="1" Grid.Row="0" Grid.RowSpan="3" Width="0" HorizontalAlignment="Left" Background="#FFE8E9EB" Opacity="0.95">
             <StackPanel Margin="0 70 0 0" Orientation="Vertical">
-                <Button Content="Сложение матрицы" Style="{StaticResource HamburgerMenuItemBtn}"/>
-                <Button Content="Вычитание матрицы" Style="{StaticResource HamburgerMenuItemBtn}"/>
-                <Button Content="Умножение матрицы на скаляр" Style="{StaticResource HamburgerMenuItemBtn}"/>
-                <Button Content="Транспонирование матрицы" Style="{StaticResource HamburgerMenuItemBtn}"/>
-                <Button Content="Умножение матрицы на её транспонированную матрицу" Style="{StaticResource HamburgerMenuItemBtn}"/>
-                <Button Content="Перестановка строк" Style="{StaticResource HamburgerMenuItemBtn}"/>
-                <Button Content="Перестановка строк согласно вектору транспозиции" Style="{StaticResource HamburgerMenuItemBtn}"/>
-                <Button Content="Обратная матрица" Style="{StaticResource HamburgerMenuItemBtn}"/>
+                <Button x:Name="BtnAddition" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnAddition_Click"/>
+                <Button x:Name="BtnDifference" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnDifference_Click"/>
+                <Button x:Name="BtnMultiplicationOnScalar" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnMultiplicationOnScalar_Click"/>
+                <Button x:Name="BtnTransposition" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnTransposition_Click"/>
+                <Button x:Name="BtnMultiplicationOnTransposed" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnMultiplicationOnTransposed_Click"/>
+                <Button x:Name="BtnRowsReplace" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnRowsReplace_Click"/>
+                <Button x:Name="BtnRowsReplaceOnTranspositionVector" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnRowsReplaceOnTranspositionVector_Click"/>
+                <Button x:Name="BtnInverse" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnInverse_Click"/>
             </StackPanel>
         </Grid>
 
@@ -137,6 +137,22 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество строк: " VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+                        <TextBox MinHeight="30" MinWidth="30" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="1"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество столбцов: " VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
+                        <TextBox MinHeight="30" MinWidth="30" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="1"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
 
             <!-- MidlleBody -->
@@ -254,7 +270,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="0.05*"/>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.3*"/>
                             <ColumnDefinition Width="0.05*"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
@@ -282,7 +298,7 @@
             </Grid>
         </Grid> <!-- MultiplicationOnScalar -->
 
-        <!-- Transpose -->
+        <!-- Transposition -->
         <Grid x:Name="GridContentTranspose" Grid.RowSpan="3" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -326,7 +342,7 @@
             <Grid Grid.Row="2">
 
             </Grid>
-        </Grid> <!-- Transpose -->
+        </Grid> <!-- Transposition -->
 
         <!-- MultiplicationOnTransposed -->
         <Grid x:Name="GridContentMultiplicationOnTransposed" Grid.RowSpan="3" Visibility="Collapsed">
