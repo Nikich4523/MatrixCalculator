@@ -95,6 +95,21 @@
             <Setter Property="FontSize" Value="40"/>
             <Setter Property="FontWeight" Value="SemiBold"/>
         </Style>
+
+        <Style TargetType="{x:Type TextBlock}">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}" x:Key="NonMatrix">
+            <Setter Property="MinHeight" Value="30"/>
+            <Setter Property="MinWidth" Value="30"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
     </Window.Resources>
     
     
@@ -141,17 +156,20 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
+                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     
                     <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Количество строк: " VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-                        <TextBox MinHeight="30" MinWidth="30" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="1"/>
+                        <TextBlock x:Name="TextBlockAdditionRowCount" Text="Количество строк: "/>
+                        <TextBox x:Name="TextBoxAdditionRowCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <TextBlock Text="Количество столбцов: " VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-                        <TextBox MinHeight="30" MinWidth="30" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="1"/>
+                        <TextBlock x:Name="TextBlockAdditionColumnCount" Text="Количество столбцов: "/>
+                        <TextBox x:Name="TextBoxAdditionColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
                     </StackPanel>
+
+                    <Button x:Name="BtnAddtitionCreateMatrix" Grid.Column="2" Content="Построить матрицу" Click="BtnAddtitionCreateMatrix_Click"/>
                 </Grid>
             </Grid>
 
@@ -188,7 +206,14 @@
 
             <!-- BottomBody -->
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
+                <Button x:Name="BtnAdditionDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnAdditionCalculate" Grid.Column="2" Content="Вычислить" Click="BtnAdditionCalculate_Click"/>
             </Grid>
         </Grid> <!-- Addition -->
 
@@ -207,6 +232,25 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock x:Name="TextBlockDifferenceRowCount" Text="Количество строк: "/>
+                        <TextBox x:Name="TextBoxDifferenceRowCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock x:Name="TextBlockDifferenceColumnCount" Text="Количество столбцов: "/>
+                        <TextBox x:Name="TextBoxDifferenceColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <Button x:Name="BtnDifferenceCreateMatrix" Grid.Column="2" Content="Построить матрицу" Click="BtnDifferenceCreateMatrix_Click"/>
+                </Grid>
             </Grid>
 
             <!-- MidlleBody -->
@@ -242,7 +286,14 @@
 
             <!-- BottomBody -->
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
+                <Button x:Name="BtnDifferenceDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnDifferenceCalculate" Grid.Column="2" Content="Вычислить" Click="BtnDifferenceCalculate_Click"/>
             </Grid>
         </Grid> <!-- Difference -->
 
@@ -261,6 +312,25 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock x:Name="TextBlockMultiplicationOnScalarRowCount" Text="Количество строк: "/>
+                        <TextBox x:Name="TextBoxMultiplicationOnScalarRowCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock x:Name="TextBlockMultiplicationOnScalarColumnCount" Text="Количество столбцов: "/>
+                        <TextBox x:Name="TextBoxMultiplicationOnScalarColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <Button x:Name="BtnMultiplicationOnScalarCreateMatrix" Grid.Column="2" Content="Построить матрицу" Click="BtnMultiplicationOnScalarCreateMatrix_Click"/>
+                </Grid>
             </Grid>
 
             <!-- MidlleBody -->
@@ -294,7 +364,14 @@
 
             <!-- BottomBody -->
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
+                <Button x:Name="BtnMultiplicationOnScalarnDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnMultiplicationOnScalarCalculate" Grid.Column="2" Content="Вычислить" Click="BtnMultiplicationOnScalarCalculate_Click"/>
             </Grid>
         </Grid> <!-- MultiplicationOnScalar -->
 
@@ -313,6 +390,25 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество строк: "/>
+                        <TextBox x:Name="TextBoxTranspositionRowCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество столбцов: "/>
+                        <TextBox x:Name="TextBoxTranspositionColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <Button x:Name="BtnTranspositionCreateMatrix" Grid.Column="2" Content="Построить матрицу" Click="BtnTranspositionCreateMatrix_Click"/>
+                </Grid>
             </Grid>
 
             <!-- MidlleBody -->
@@ -340,7 +436,14 @@
 
             <!-- BottomBody -->
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
+                <Button x:Name="BtnTranspositionDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnTranspositionCalculate" Grid.Column="2" Content="Вычислить" Click="BtnTranspositionCalculate_Click"/>
             </Grid>
         </Grid> <!-- Transposition -->
 
@@ -359,6 +462,25 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество строк: "/>
+                        <TextBox x:Name="TextBoxMultiplicationOnTransposedRowCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество столбцов: "/>
+                        <TextBox x:Name="TextBoxMultiplicationOnTransposedColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <Button x:Name="BtnMultiplicationOnTransposedCreateMatrix" Grid.Column="2" Content="Построить матрицу" Click="BtnMultiplicationOnTransposedCreateMatrix_Click"/>
+                </Grid>
             </Grid>
 
             <!-- MidlleBody -->
@@ -386,7 +508,14 @@
 
             <!-- BottomBody -->
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
+                <Button x:Name="BtnMultiplicationOnTransposedDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnMultiplicationOnTransposedCalculate" Grid.Column="2" Content="Вычислить" Click="BtnMultiplicationOnTransposedCalculate_Click"/>
             </Grid>
         </Grid> <!-- MultiplicationOnTransposed -->
 
