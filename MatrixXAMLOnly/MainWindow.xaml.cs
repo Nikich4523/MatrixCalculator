@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using Matrix;
 
 namespace MatrixXAMLOnly
 {
@@ -292,8 +293,8 @@ namespace MatrixXAMLOnly
         #region Addition
         private void BtnAdditionCalculate_Click(object sender, RoutedEventArgs e)
         {
-            int rowCount = GridAdditionResult.RowDefinitions.Count;
-            int columnCount = GridAdditionResult.ColumnDefinitions.Count;
+            int rowCount = ((Grid)GridAdditionResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridAdditionResult.Children[0]).ColumnDefinitions.Count;
 
             double[,] frstTerm = new double[rowCount, columnCount];
             double[,] scndTerm = new double[rowCount, columnCount];
@@ -310,16 +311,20 @@ namespace MatrixXAMLOnly
                     catch
                     {
                         MessageBox.Show("Матрица указана некорректно!");
+                        return;
                     }
                 }
             }
 
-            double[,] result = new double[rowCount, columnCount];
+            MyMatrix matrixFrstTerm = new MyMatrix(frstTerm);
+            MyMatrix matrixScndTerm = new MyMatrix(scndTerm);
+
+            MyMatrix result = matrixFrstTerm + matrixScndTerm;
             for (int i = 0; i < rowCount; i++)
             {
                 for (int j = 0; j < columnCount; j++)
                 {
-                    ((TextBox)((Grid)GridAdditionResult.Children[0]).Children[(i * columnCount) + j]).Text = result[i, j].ToString();
+                    ((TextBox)((Grid)GridAdditionResult.Children[0]).Children[(i * columnCount) + j]).Text = result.data[i, j].ToString();
                 }
             }
         }
@@ -336,6 +341,7 @@ namespace MatrixXAMLOnly
             catch
             {
                 MessageBox.Show("Количество строк/столбцов указано некорректно!");
+                return;
             }
 
             GridAdditionFrstTerm.Children.Clear();
@@ -361,6 +367,7 @@ namespace MatrixXAMLOnly
             catch
             {
                 MessageBox.Show("Количество строк/столбцов указано некорректно!");
+                return;
             }
 
             GridDifferenceFrstTerm.Children.Clear();
@@ -374,8 +381,8 @@ namespace MatrixXAMLOnly
 
         private void BtnDifferenceCalculate_Click(object sender, RoutedEventArgs e)
         {
-            int rowCount = GridDifferenceResult.RowDefinitions.Count;
-            int columnCount = GridDifferenceResult.ColumnDefinitions.Count;
+            int rowCount = ((Grid)GridDifferenceResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridDifferenceResult.Children[0]).ColumnDefinitions.Count;
 
             double[,] frstTerm = new double[rowCount, columnCount];
             double[,] scndTerm = new double[rowCount, columnCount];
@@ -392,16 +399,20 @@ namespace MatrixXAMLOnly
                     catch
                     {
                         MessageBox.Show("Матрица указана некорректно!");
+                        return;
                     }
                 }
             }
 
-            double[,] result = new double[rowCount, columnCount];
+            MyMatrix matrixFrstTerm = new MyMatrix(frstTerm);
+            MyMatrix matrixScndTerm = new MyMatrix(scndTerm);
+
+            MyMatrix result = matrixFrstTerm - matrixScndTerm;
             for (int i = 0; i < rowCount; i++)
             {
                 for (int j = 0; j < columnCount; j++)
                 {
-                    ((TextBox)((Grid)GridDifferenceResult.Children[0]).Children[(i * columnCount) + j]).Text = result[i, j].ToString();
+                    ((TextBox)((Grid)GridDifferenceResult.Children[0]).Children[(i * columnCount) + j]).Text = result.data[i, j].ToString();
                 }
             }
         }
@@ -420,6 +431,7 @@ namespace MatrixXAMLOnly
             catch
             {
                 MessageBox.Show("Количество строк/столбцов указано некорректно!");
+                return;
             }
 
             GridMultiplicationOnScalarFrstTerm.Children.Clear();
@@ -432,18 +444,20 @@ namespace MatrixXAMLOnly
 
         private void BtnMultiplicationOnScalarCalculate_Click(object sender, RoutedEventArgs e)
         {
-            int rowCount = GridMultiplicationOnScalarResult.RowDefinitions.Count;
-            int columnCount = GridMultiplicationOnScalarResult.ColumnDefinitions.Count;
+            int rowCount = ((Grid)GridMultiplicationOnScalarResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridMultiplicationOnScalarResult.Children[0]).ColumnDefinitions.Count;
 
             double[,] frstTerm = new double[rowCount, columnCount];
 
+            double scndTerm = 0;
             try
             {
-                double scndTerm = Convert.ToDouble(TextBoxMultiplicationOnScalarScndTerm.Text);
+                scndTerm = Convert.ToDouble(TextBoxMultiplicationOnScalarScndTerm.Text);
             }
             catch
             {
                 MessageBox.Show("Скалярная величина указана некорректно!");
+                return;
             }
 
             for (int i = 0; i < rowCount; i++)
@@ -461,12 +475,14 @@ namespace MatrixXAMLOnly
                 }
             }
 
-            double[,] result = new double[rowCount, columnCount];
+            MyMatrix matrixFrstTerm = new MyMatrix(frstTerm);
+
+            MyMatrix result = matrixFrstTerm * scndTerm;
             for (int i = 0; i < rowCount; i++)
             {
                 for (int j = 0; j < columnCount; j++)
                 {
-                    ((TextBox)((Grid)GridMultiplicationOnScalarResult.Children[0]).Children[(i * columnCount) + j]).Text = result[i, j].ToString();
+                    ((TextBox)((Grid)GridMultiplicationOnScalarResult.Children[0]).Children[(i * columnCount) + j]).Text = result.data[i, j].ToString();
                 }
             }
         }
