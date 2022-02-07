@@ -70,6 +70,11 @@ namespace Matrix
             }
         }
 
+        public static MyMatrix operator *(MyMatrix matrix1, MyMatrix matrix2)
+        {
+
+        }
+
         public static MyMatrix operator *(MyMatrix matrix1, double num)
         {
             double[,] array = new double[matrix1.Rows, matrix1.Columns];
