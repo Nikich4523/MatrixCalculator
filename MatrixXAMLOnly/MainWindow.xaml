@@ -489,7 +489,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="0.1*"/>
+                            <ColumnDefinition Width="0.2*"/>
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
@@ -497,7 +497,7 @@
 
                         </Grid>
 
-                        <TextBlock Text="=>" Grid.Column="1" Style="{StaticResource OperationSign}"/>
+                        <TextBlock Text="*=>" Grid.Column="1" Style="{StaticResource OperationSign}"/>
 
                         <Grid x:Name="GridMultiplicationOnTransposedResult" Grid.Column="2">
 
@@ -534,6 +534,25 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество строк: "/>
+                        <TextBox x:Name="TextBoxRowReplaceRowCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество столбцов: "/>
+                        <TextBox x:Name="TextBoxRowReplaceColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                    </StackPanel>
+
+                    <Button x:Name="BtnRowReplaceCreateMatrix" Grid.Column="2" Content="Построить матрицу" Click="BtnRowReplaceCreateMatrix_Click"/>
+                </Grid>
             </Grid>
 
             <!-- MidlleBody -->
@@ -574,7 +593,14 @@
 
             <!-- BottomBody -->
             <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
+                <Button x:Name="BtnRowsReplaceDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnRowsReplaceCalculate" Grid.Column="2" Content="Вычислить" Click="BtnRowsReplaceCalculate_Click"/>
             </Grid>
         </Grid> <!-- RowsReplace -->
         

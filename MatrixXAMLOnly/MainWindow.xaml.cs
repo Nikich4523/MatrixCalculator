@@ -30,8 +30,6 @@ namespace MatrixXAMLOnly
             BtnRowsReplace.Content = "Перестановка строк";
             BtnRowsReplaceOnTranspositionVector.Content = "Перестановка строк согласно \nвектору транспозиции";
             BtnInverse.Content = "Обратная матрицы";
-
-
         }
 
         private void BtnHamburgerMenu_Click(object sender, RoutedEventArgs e)
@@ -248,6 +246,9 @@ namespace MatrixXAMLOnly
             GridContentTranspose.Visibility = Visibility.Collapsed;
             // GridContentRowReplaceOnTranspositionVector;
             // GridContentInverse;
+
+            GridMultiplicationOnTransposedTerm.Children.Add(CreateMatrix(5, 5, false));
+            GridMultiplicationOnTransposedResult.Children.Add(CreateMatrix(5, 5, true));
         }
 
         private void BtnRowsReplace_Click(object sender, RoutedEventArgs e)
@@ -261,8 +262,8 @@ namespace MatrixXAMLOnly
             // GridContentRowReplaceOnTranspositionVector;
             // GridContentInverse;
 
-            GridTransposeFrom.Children.Add(CreateMatrix(3, 5, false));
-            GridTransposed.Children.Add(CreateMatrix(5, 3, true));
+            GridRowsReplaceMatrix.Children.Add(CreateMatrix(3, 5, false));
+            GridRowsReplaceResult.Children.Add(CreateMatrix(5, 3, true));
         }
 
         private void BtnInverse_Click(object sender, RoutedEventArgs e)
@@ -512,8 +513,8 @@ namespace MatrixXAMLOnly
 
         private void BtnTranspositionCalculate_Click(object sender, RoutedEventArgs e)
         {
-            int rowCount = GridTransposeFrom.RowDefinitions.Count;
-            int columnCount = GridTransposeFrom.ColumnDefinitions.Count;
+            int rowCount = ((Grid)GridTransposeFrom.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridTransposeFrom.Children[0]).ColumnDefinitions.Count;
 
             double[,] frstTerm = new double[rowCount, columnCount];
 
@@ -532,12 +533,14 @@ namespace MatrixXAMLOnly
                 }
             }
 
-            double[,] result = new double[columnCount, rowCount];
-            for (int i = 0; i < columnCount; i++)
+            MyMatrix result = MyMatrix.Transpose(new MyMatrix(frstTerm));
+            for (int i = 0; i < result.Rows; i++)
             {
-                for (int j = 0; j < rowCount; j++)
+                for (int j = 0; j < result.Columns; j++)
                 {
-                    ((TextBox)((Grid)GridTransposed.Children[0]).Children[(i * rowCount) + j]).Text = result[i, j].ToString();
+                    Grid matrixGrid = (Grid)GridTransposed.Children[0];
+                    TextBox tb = (TextBox)matrixGrid.Children[(i * result.Columns) + j];
+                    tb.Text = result.data[i, j].ToString();
                 }
             }
         }
@@ -562,14 +565,13 @@ namespace MatrixXAMLOnly
             GridMultiplicationOnTransposedResult.Children.Clear();
 
             GridMultiplicationOnTransposedTerm.Children.Add(CreateMatrix(rowCount, columnCount, false));
-            GridMultiplicationOnTransposedResult.Children.Add(CreateMatrix(columnCount, rowCount, true));
+            GridMultiplicationOnTransposedResult.Children.Add(CreateMatrix(rowCount, rowCount, true));
         }
 
         private void BtnMultiplicationOnTransposedCalculate_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: отредачить всё по феншую, тут траблы одновременно и с транспонирование и с умножение матрицы на матрицу (нужно с размера угадать)
-            int rowCount = GridMultiplicationOnTransposedTerm.RowDefinitions.Count;
-            int columnCount = GridTransposeFrom.ColumnDefinitions.Count;
+            int rowCount = ((Grid)GridMultiplicationOnTransposedTerm.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridMultiplicationOnTransposedTerm.Children[0]).ColumnDefinitions.Count;
 
             double[,] frstTerm = new double[rowCount, columnCount];
 
@@ -579,21 +581,83 @@ namespace MatrixXAMLOnly
                 {
                     try
                     {
-                        frstTerm[i, j] = Convert.ToDouble(((Grid)GridTransposeFrom.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                        frstTerm[i, j] = Convert.ToDouble(((Grid)GridMultiplicationOnTransposedTerm.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
                     }
                     catch
                     {
                         MessageBox.Show("Матрица указана некорректно!");
+                        return;
                     }
                 }
             }
 
-            double[,] result = new double[columnCount, rowCount];
-            for (int i = 0; i < columnCount; i++)
+            MyMatrix matrixFrst = new MyMatrix(frstTerm);
+            MyMatrix matrixTransposed = MyMatrix.Transpose(matrixFrst);
+
+            MyMatrix result = matrixFrst * matrixTransposed;
+            for (int i = 0; i < result.Rows; i++)
             {
-                for (int j = 0; j < rowCount; j++)
+                for (int j = 0; j < result.Columns; j++)
                 {
-                    ((TextBox)((Grid)GridTransposed.Children[0]).Children[(i * rowCount) + j]).Text = result[i, j].ToString();
+                    ((TextBox)((Grid)GridMultiplicationOnTransposedResult.Children[0]).Children[(i * result.Columns) + j]).Text = result.data[i, j].ToString();
+                }
+            }
+        }
+        #endregion
+
+        #region RowReplace
+        private void BtnRowReplaceCreateMatrix_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = 0;
+            int columnCount = 0;
+            try
+            {
+                rowCount = Convert.ToInt32(TextBoxRowReplaceRowCount.Text);
+                columnCount = Convert.ToInt32(TextBoxRowReplaceColumnCount.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Количество строк/столбцов указано некорректно!");
+            }
+
+            GridRowsReplaceMatrix.Children.Clear();
+            GridRowsReplaceResult.Children.Clear();
+
+            GridRowsReplaceMatrix.Children.Add(CreateMatrix(rowCount, columnCount, false));
+            GridRowsReplaceResult.Children.Add(CreateMatrix(rowCount, columnCount, true));
+        }
+
+        private void BtnRowsReplaceCalculate_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridRowsReplaceMatrix.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridRowsReplaceMatrix.Children[0]).ColumnDefinitions.Count;
+
+            double[,] frstTerm = new double[rowCount, columnCount];
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    try
+                    {
+                        frstTerm[i, j] = Convert.ToDouble(((Grid)GridRowsReplaceMatrix.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Матрица указана некорректно!");
+                        return;
+                    }
+                }
+            }
+
+            MyMatrix matrixFrstTerm = new MyMatrix(frstTerm);
+
+            MyMatrix result = MyMatrix.RowReplace(matrixFrstTerm, Convert.ToInt32(TextBoxRowReplaceFrstTerm.Text), Convert.ToInt32(TextBoxRowReplaceScndTerm.Text));
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    ((TextBox)((Grid)GridDifferenceResult.Children[0]).Children[(i * columnCount) + j]).Text = result.data[i, j].ToString();
                 }
             }
         }

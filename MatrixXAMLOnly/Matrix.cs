@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Matrix
 {
-    class MyMatrix
+    class MyMatrix : Object
     {
         public double[,] data; // 
 
@@ -70,9 +70,34 @@ namespace Matrix
             }
         }
 
-        public static MyMatrix operator *(MyMatrix matrix1, MyMatrix matrix2)
+        public static MyMatrix operator *(MyMatrix matrixA, MyMatrix matrixB)
         {
+            if (matrixA.Rows != matrixB.Columns)
+            {
+                throw new Exception("Умножение матриц A и B возможно только в том случае, когда число столбцов матрицы A совпадает с числом строк в матрице B");
+            }
 
+
+            int K = matrixA.Columns;
+            int M = matrixA.Rows;
+            int N = matrixB.Columns;
+            double[,] array = new double[M, N];
+
+            for (int i = 0; i < M; i++)
+            {
+                for (int j = 0; j < N; j++)
+                {
+                    double num = 0;
+                    for (int k = 0; k < K; k++)
+                    {
+                        num += matrixA.data[i, k] * matrixB.data[k, j];
+                    }
+
+                    array[i, j] = num;
+                }
+            }
+
+            return new MyMatrix(array);
         }
 
         public static MyMatrix operator *(MyMatrix matrix1, double num)
@@ -93,6 +118,54 @@ namespace Matrix
         public static MyMatrix operator *(double num, MyMatrix matrix1)
         {
             return matrix1 * num;
+        }
+
+        public static MyMatrix Transpose(MyMatrix matrix)
+        {
+            double[,] array = new double[matrix.Columns, matrix.Rows];
+
+            for (int i = 0; i < matrix.Rows; i++)
+            {
+                for (int j = 0; j < matrix.Columns; j++)
+                {
+                    array[j, i] = matrix.data[i, j];
+                }
+            }
+
+            return new MyMatrix(array);
+        }
+
+        public static MyMatrix RowReplace(MyMatrix matrix, int frstIndex, int scndIndex)
+        {
+            double[,] array = matrix.data;
+            double[] boof = new double[matrix.Columns];
+
+            for (int i = 0; i < matrix.Columns; i++)
+            {
+                boof[i] = matrix.data[frstIndex, i];
+            }
+
+            for (int i = 0; i < matrix.Rows; i++)
+            {
+                for (int j = 0; j < matrix.Columns; j++)
+                {
+                    if (i != frstIndex)
+                    {
+                        array[i, j] = matrix.data[i, j];
+                    }
+                    else
+                    {
+                        array[i, j] = matrix.data[scndIndex, j];
+                    }
+                }
+            }
+
+            for (int i = 0; i < matrix.Columns; i++)
+            {
+                array[scndIndex, i] = boof[i];
+            }
+
+            return new MyMatrix(array);
         }
 
         public override string ToString()
