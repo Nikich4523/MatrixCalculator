@@ -10,6 +10,9 @@ using Matrix;
 
 namespace MatrixXAMLOnly
 {
+    // TODO: Перепроверить все поля на валидацию
+    // TODO: Создание диаграмм
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -19,8 +22,8 @@ namespace MatrixXAMLOnly
         {
             InitializeComponent();
 
-            BtnAddition.Content = "Сложение матрицы";
-            BtnDifference.Content = "Вычитание матрицы";
+            BtnAddition.Content = "Сложение матриц";
+            BtnDifference.Content = "Вычитание матриц";
             BtnMultiplicationOnScalar.Content = "Умножение матрицы \nна скаляр";
             BtnTransposition.Content = "Транспонирование матрицы";
             BtnMultiplicationOnTransposed.Content = "Умножение матрицы на её \nтранспонированную матрицу";
@@ -28,6 +31,7 @@ namespace MatrixXAMLOnly
             BtnRowsTranspositionReplace.Content = "Перестановка строк согласно \nвектору транспозиции";
             BtnInverse.Content = "Обратная матрицы";
 
+            BtnAddition.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
         }
 
         private void BtnHamburgerMenu_Click(object sender, RoutedEventArgs e)
@@ -120,7 +124,7 @@ namespace MatrixXAMLOnly
                 e.Key != Key.NumPad6 && e.Key != Key.D6 &&
                 e.Key != Key.NumPad7 && e.Key != Key.D7 &&
                 e.Key != Key.NumPad8 && e.Key != Key.D8 &&
-                e.Key != Key.NumPad9 && e.Key != Key.D9)
+                e.Key != Key.NumPad9 && e.Key != Key.D9 && e.Key != Key.OemMinus && e.Key != Key.Subtract)
             {
                 e.Handled = true;
             }
@@ -170,18 +174,23 @@ namespace MatrixXAMLOnly
             
         }
 
-
         #region HumburgerMenuItems
         private void BtnAddition_Click(object sender, RoutedEventArgs e)
         {
+            this.Title = "Калькулятор: матрицы - Сложение матриц";
+
             GridContentAddition.Visibility = Visibility.Visible;
             GridContentDifference.Visibility = Visibility.Collapsed;
             GridContentMultiplication.Visibility = Visibility.Collapsed;
             GridContentMultiplicationOnTransposed.Visibility = Visibility.Collapsed;
             GridContentRowsReplace.Visibility = Visibility.Collapsed;
             GridContentTranspose.Visibility = Visibility.Collapsed;
-            GridContentRowTranspositionReplace.Visibility = Visibility.Visible;
-            // GridContentInverse;
+            GridContentRowTranspositionReplace.Visibility = Visibility.Collapsed;
+            GridContentInverse.Visibility = Visibility.Collapsed;
+
+            GridAdditionFrstTerm.Children.Clear();
+            GridAdditionScndTerm.Children.Clear();
+            GridAdditionResult.Children.Clear();
 
             GridAdditionFrstTerm.Children.Add(CreateMatrix(5, 5, false));
             GridAdditionScndTerm.Children.Add(CreateMatrix(5, 5, false));
@@ -190,14 +199,20 @@ namespace MatrixXAMLOnly
 
         private void BtnDifference_Click(object sender, RoutedEventArgs e)
         {
+            this.Title = "Калькулятор: матрицы - Вычитание матриц";
+
             GridContentAddition.Visibility = Visibility.Collapsed;
             GridContentDifference.Visibility = Visibility.Visible;
             GridContentMultiplication.Visibility = Visibility.Collapsed;
             GridContentMultiplicationOnTransposed.Visibility = Visibility.Collapsed;
             GridContentRowsReplace.Visibility = Visibility.Collapsed;
             GridContentTranspose.Visibility = Visibility.Collapsed;
-            GridContentRowTranspositionReplace.Visibility = Visibility.Visible;
-            // GridContentInverse;
+            GridContentRowTranspositionReplace.Visibility = Visibility.Collapsed;
+            GridContentInverse.Visibility = Visibility.Collapsed;
+
+            GridDifferenceFrstTerm.Children.Clear();
+            GridDifferenceScndTerm.Children.Clear();
+            GridDifferenceResult.Children.Clear();
 
             GridDifferenceFrstTerm.Children.Add(CreateMatrix(5, 5, false));
             GridDifferenceScndTerm.Children.Add(CreateMatrix(5, 5, false));
@@ -206,14 +221,20 @@ namespace MatrixXAMLOnly
 
         private void BtnMultiplicationOnScalar_Click(object sender, RoutedEventArgs e)
         {
+            this.Title = "Калькулятор: матрицы - Умножение матрицы на скаляр";
+
             GridContentAddition.Visibility = Visibility.Collapsed;
             GridContentDifference.Visibility = Visibility.Collapsed;
             GridContentMultiplication.Visibility = Visibility.Visible;
             GridContentMultiplicationOnTransposed.Visibility = Visibility.Collapsed;
             GridContentRowsReplace.Visibility = Visibility.Collapsed;
             GridContentTranspose.Visibility = Visibility.Collapsed;
-            GridContentRowTranspositionReplace.Visibility = Visibility.Visible;
-            // GridContentInverse;
+            GridContentRowTranspositionReplace.Visibility = Visibility.Collapsed;
+            GridContentInverse.Visibility = Visibility.Collapsed;
+
+            GridMultiplicationOnScalarFrstTerm.Children.Clear();
+            TextBoxMultiplicationOnScalarScndTerm.Text = "";
+            GridMultiplicationOnScalarResult.Children.Clear();
 
             GridMultiplicationOnScalarFrstTerm.Children.Add(CreateMatrix(5, 5, false));
             GridMultiplicationOnScalarResult.Children.Add(CreateMatrix(5, 5, true));
@@ -221,14 +242,19 @@ namespace MatrixXAMLOnly
 
         private void BtnTransposition_Click(object sender, RoutedEventArgs e)
         {
+            this.Title = "Калькулятор: матрицы - Транспонирование матрицы";
+
             GridContentAddition.Visibility = Visibility.Collapsed;
             GridContentDifference.Visibility = Visibility.Collapsed;
             GridContentMultiplication.Visibility = Visibility.Collapsed;
             GridContentMultiplicationOnTransposed.Visibility = Visibility.Collapsed;
             GridContentRowsReplace.Visibility = Visibility.Collapsed;
             GridContentTranspose.Visibility = Visibility.Visible;
-            GridContentRowTranspositionReplace.Visibility = Visibility.Visible;
-            // GridContentInverse;
+            GridContentRowTranspositionReplace.Visibility = Visibility.Collapsed;
+            GridContentInverse.Visibility = Visibility.Collapsed;
+
+            GridTransposeFrom.Children.Clear();
+            GridTransposed.Children.Clear();
 
             GridTransposeFrom.Children.Add(CreateMatrix(3, 5, false));
             GridTransposed.Children.Add(CreateMatrix(5, 3, true));
@@ -236,14 +262,19 @@ namespace MatrixXAMLOnly
 
         private void BtnMultiplicationOnTransposed_Click(object sender, RoutedEventArgs e)
         {
+            this.Title = "Калькулятор: матрицы - Умножение матрицы на её транспонированную матрицу";
+
             GridContentAddition.Visibility = Visibility.Collapsed;
             GridContentDifference.Visibility = Visibility.Collapsed;
             GridContentMultiplication.Visibility = Visibility.Collapsed;
             GridContentMultiplicationOnTransposed.Visibility = Visibility.Visible;
             GridContentRowsReplace.Visibility = Visibility.Collapsed;
             GridContentTranspose.Visibility = Visibility.Collapsed;
-            GridContentRowTranspositionReplace.Visibility = Visibility.Visible;
-            // GridContentInverse;
+            GridContentRowTranspositionReplace.Visibility = Visibility.Collapsed;
+            GridContentInverse.Visibility = Visibility.Collapsed;
+
+            GridMultiplicationOnTransposedTerm.Children.Clear();
+            GridMultiplicationOnTransposedResult.Children.Clear();
 
             GridMultiplicationOnTransposedTerm.Children.Add(CreateMatrix(5, 5, false));
             GridMultiplicationOnTransposedResult.Children.Add(CreateMatrix(5, 5, true));
@@ -251,14 +282,19 @@ namespace MatrixXAMLOnly
 
         private void BtnRowsReplace_Click(object sender, RoutedEventArgs e)
         {
+            this.Title = "Калькулятор: матрицы - Перестановка строк";
+
             GridContentAddition.Visibility = Visibility.Collapsed;
             GridContentDifference.Visibility = Visibility.Collapsed;
             GridContentMultiplication.Visibility = Visibility.Collapsed;
             GridContentMultiplicationOnTransposed.Visibility = Visibility.Collapsed;
             GridContentRowsReplace.Visibility = Visibility.Visible;
             GridContentTranspose.Visibility = Visibility.Collapsed;
-            GridContentRowTranspositionReplace.Visibility = Visibility.Visible;
-            // GridContentInverse;
+            GridContentRowTranspositionReplace.Visibility = Visibility.Collapsed;
+            GridContentInverse.Visibility = Visibility.Collapsed;
+
+            GridRowsReplaceMatrix.Children.Clear();
+            GridRowsReplaceResult.Children.Clear();
 
             GridRowsReplaceMatrix.Children.Add(CreateMatrix(5, 5, false));
             GridRowsReplaceResult.Children.Add(CreateMatrix(5, 5, true));
@@ -266,18 +302,28 @@ namespace MatrixXAMLOnly
 
         private void BtnInverse_Click(object sender, RoutedEventArgs e)
         {
+            this.Title = "Калькулятор: матрицы - Обратная матрица";
+
             GridContentAddition.Visibility = Visibility.Collapsed;
             GridContentDifference.Visibility = Visibility.Collapsed;
             GridContentMultiplication.Visibility = Visibility.Collapsed;
             GridContentMultiplicationOnTransposed.Visibility = Visibility.Collapsed;
             GridContentRowsReplace.Visibility = Visibility.Collapsed;
             GridContentTranspose.Visibility = Visibility.Collapsed;
-            GridContentRowTranspositionReplace.Visibility = Visibility.Visible;
-            // GridContentInverse;
+            GridContentRowTranspositionReplace.Visibility = Visibility.Collapsed;
+            GridContentInverse.Visibility = Visibility.Visible;
+
+            GridInverseMatrix.Children.Clear();
+            GridInverseResult.Children.Clear();
+
+            GridInverseMatrix.Children.Add(CreateMatrix(5, 5, false));
+            GridInverseResult.Children.Add(CreateMatrix(5, 5, true));
         }
 
         private void BtnRowsTranspositionReplace_Click(object sender, RoutedEventArgs e)
         {
+            this.Title = "Калькулятор: матрицы - Перестановка строк согласно вектору транспозиции";
+
             GridContentAddition.Visibility = Visibility.Collapsed;
             GridContentDifference.Visibility = Visibility.Collapsed;
             GridContentMultiplication.Visibility = Visibility.Collapsed;
@@ -285,7 +331,11 @@ namespace MatrixXAMLOnly
             GridContentRowsReplace.Visibility = Visibility.Collapsed;
             GridContentTranspose.Visibility = Visibility.Collapsed;
             GridContentRowTranspositionReplace.Visibility = Visibility.Visible;
-            // GridContentInverse;
+            GridContentInverse.Visibility = Visibility.Collapsed;
+
+            GridRowTranspositionReplaceMatrix.Children.Clear();
+            GridRowTranspositionReplaceVector.Children.Clear();
+            GridRowTranspositionReplaceResult.Children.Clear();
 
             GridRowTranspositionReplaceMatrix.Children.Add(CreateMatrix(5, 5, false));
             GridRowTranspositionReplaceVector.Children.Add(CreateMatrix(5, 1, false));
@@ -424,8 +474,7 @@ namespace MatrixXAMLOnly
         #region MultiplicationOnScalar
         private void BtnMultiplicationOnScalarCreateMatrix_Click(object sender, RoutedEventArgs e)
         {
-            int rowCount = 0;
-            int columnCount = 0;
+            int rowCount, columnCount;
             try
             {
                 rowCount = Convert.ToInt32(TextBoxMultiplicationOnScalarRowCount.Text);
@@ -474,6 +523,7 @@ namespace MatrixXAMLOnly
                     catch
                     {
                         MessageBox.Show("Матрица указана некорректно!");
+                        return;
                     }
                 }
             }
@@ -504,6 +554,7 @@ namespace MatrixXAMLOnly
             catch
             {
                 MessageBox.Show("Количество строк/столбцов указано некорректно!");
+                return;
             }
 
             GridTransposeFrom.Children.Clear();
@@ -531,6 +582,7 @@ namespace MatrixXAMLOnly
                     catch
                     {
                         MessageBox.Show("Матрица указана некорректно!");
+                        return;
                     }
                 }
             }
@@ -561,6 +613,7 @@ namespace MatrixXAMLOnly
             catch
             {
                 MessageBox.Show("Количество строк/столбцов указано некорректно!");
+                return;
             }
 
             GridMultiplicationOnTransposedTerm.Children.Clear();
@@ -620,6 +673,7 @@ namespace MatrixXAMLOnly
             catch
             {
                 MessageBox.Show("Количество строк/столбцов указано некорректно!");
+                return;
             }
 
             GridRowsReplaceMatrix.Children.Clear();
@@ -668,8 +722,7 @@ namespace MatrixXAMLOnly
         #region RowTranspositionReplace
         private void BtnRowTranspositionReplaceCreateMatrix_Click(object sender, RoutedEventArgs e)
         {
-            int rowCount = 0;
-            int columnCount = 0;
+            int rowCount, columnCount;
             try
             {
                 rowCount = Convert.ToInt32(TextBoxRowTranspositionReplaceRowCount.Text);
@@ -678,6 +731,7 @@ namespace MatrixXAMLOnly
             catch
             {
                 MessageBox.Show("Количество строк/столбцов указано некорректно!");
+                return;
             }
 
             GridRowTranspositionReplaceMatrix.Children.Clear();
@@ -754,6 +808,71 @@ namespace MatrixXAMLOnly
         #endregion
 
         #region Inverse
+        private void BtnInverseCreateMatrix_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount, columnCount;
+            try
+            {
+                rowCount = Convert.ToInt32(TextBoxInverseRowCount.Text);
+                columnCount = Convert.ToInt32(TextBoxInverseColumnCount.Text);
+            }
+            catch
+            {
+                MessageBox.Show("Количество строк/столбцов указано некорректно!");
+                return;
+            }
+
+            GridInverseMatrix.Children.Clear();
+            GridInverseResult.Children.Clear();
+
+            GridInverseMatrix.Children.Add(CreateMatrix(rowCount, columnCount, false));
+            GridInverseResult.Children.Add(CreateMatrix(rowCount, columnCount, true));
+        }
+
+        private void BtnInverseCalculate_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridInverseMatrix.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridInverseMatrix.Children[0]).ColumnDefinitions.Count;
+
+            double[,] frstTerm = new double[rowCount, columnCount];
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    try
+                    {
+                        frstTerm[i, j] = Convert.ToDouble(((Grid)GridInverseMatrix.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Матрица указана некорректно!");
+                        return;
+                    }
+                }
+            }
+
+            MyMatrix matrixFrstTerm = new MyMatrix(frstTerm);
+
+            MyMatrix result;
+            try
+            {
+                result = MyMatrix.Inverse(matrixFrstTerm);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return;
+            }
+
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    ((TextBox)((Grid)GridInverseResult.Children[0]).Children[(i * columnCount) + j]).Text = result.data[i, j].ToString();
+                }
+            }
+        }
         #endregion
     }
 }

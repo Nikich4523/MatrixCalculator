@@ -685,6 +685,78 @@
                 <Button x:Name="BtnRowTranspositionReplaceCalculate" Grid.Column="2" Content="Вычислить" Click="BtnRowTranspositionReplaceCalculate_Click"/>
             </Grid>
         </Grid> <!-- RowTranspositionReplace -->
+
+        <!-- Inverse -->
+        <Grid x:Name="GridContentInverse" Grid.RowSpan="3" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- UpperBody -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество строк: "/>
+                        <TextBox x:Name="TextBoxInverseRowCount" Style="{StaticResource NonMatrix}" MaxLength="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество столбцов: "/>
+                        <TextBox x:Name="TextBoxInverseColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <Button x:Name="BtnInverseCreateMatrix" Grid.Column="2" Content="Построить матрицу" Click="BtnInverseCreateMatrix_Click"/>
+                </Grid>
+            </Grid>
+
+            <!-- MidlleBody -->
+            <Grid Grid.Row="1">
+                <Border Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0 1 0 1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.5*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="GridInverseMatrix" Grid.Column="0">
+
+                        </Grid>
+
+                        <TextBlock Text="=> A−1" Grid.Column="1" Style="{StaticResource OperationSign}" TextWrapping="Wrap"/>
+
+                        <Grid x:Name="GridInverseResult" Grid.Column="2">
+
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- BottomBody -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="BtnInverseeDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnInverseCalculate" Grid.Column="2" Content="Вычислить" Click="BtnInverseCalculate_Click"/>
+            </Grid>
+        </Grid> <!-- Inverse -->
         
     </Grid>
 </Window>
