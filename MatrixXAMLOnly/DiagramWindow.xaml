@@ -1,0 +1,35 @@
+﻿<Window x:Class="MatrixXAMLOnly.DiagramWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:local="clr-namespace:MatrixXAMLOnly"
+        mc:Ignorable="d"
+        Title="Диаграмма" Height="500" Width="800" Icon="Images\matrix_icon.ico" MinHeight="500" MinWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="Black" BorderThickness="0 0 0 1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="50 15 0 15">
+                    <ComboBox x:Name="ComboBoxOrientation" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" FontWeight="SemiBold" Margin="0 0 10 0" MinWidth="120">
+                        <ComboBoxItem Content="По строке:"/>
+                        <ComboBoxItem Content="По столбцу:"/>
+                    </ComboBox>
+                    <TextBox x:Name="TextBoxNum" MinWidth="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" MaxLength="1"/>
+                </StackPanel>
+
+                <Button x:Name="BtnCreateDiagram" Content="Построить диаграмму" Grid.Column="1" Margin="10 15 50 15" MinWidth="200" HorizontalAlignment="Right"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

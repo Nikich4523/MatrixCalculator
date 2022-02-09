@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MatrixXAMLOnly"
         mc:Ignorable="d"
-        Title="Калькулятор: матрицы" Height="700" Width="1100" Icon="Images\matrix_icon.ico" MinHeight="500" MinWidth="800" x:Name="Window">
+        Title="Калькулятор: матрицы" Height="700" Width="1100" Icon="Images\matrix_icon.ico" MinHeight="500" MinWidth="800">
     <Window.Resources>
         <Style TargetType="{x:Type Button}" x:Key="HamburgerBtn">
             <Setter Property="Background" Value="Transparent" />

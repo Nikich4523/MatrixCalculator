@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Matrix
 {
-    class MyMatrix : Object
+    public class MyMatrix : Object
     {
         public double[,] data; // 
 
