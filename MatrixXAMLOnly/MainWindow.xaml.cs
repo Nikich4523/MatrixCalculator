@@ -27,6 +27,7 @@ namespace MatrixXAMLOnly
             BtnRowsReplace.Content = "Перестановка строк";
             BtnRowsTranspositionReplace.Content = "Перестановка строк согласно \nвектору транспозиции";
             BtnInverse.Content = "Обратная матрицы";
+
         }
 
         private void BtnHamburgerMenu_Click(object sender, RoutedEventArgs e)

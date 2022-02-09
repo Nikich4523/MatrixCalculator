@@ -170,8 +170,8 @@ namespace Matrix
 
         public static MyMatrix RowReplaceByVector(MyMatrix matrix, int[] vector)
         {
-            int[] nowVector = new int[vector.Length];   // 0 1 2 3 4 - 4 1 2 3 0 - 4 1 0 3 2 - 4 1 0 2 3
-            for (int i = 0; i < nowVector.Length; i++)  // 4 1 0 2 3 - 4 1 0 2 3 - 4 1 0 2 3 - 4 1 0 2 3
+            int[] nowVector = new int[vector.Length];
+            for (int i = 0; i < nowVector.Length; i++)
             {
                 nowVector[i] = i;
             }
@@ -203,10 +203,33 @@ namespace Matrix
 
         public static MyMatrix Inverse(MyMatrix matrix)
         {
-            if (matrix.IsMayInverse())
+            // Проверяем, существует ли обратная матрица?
+            if (!matrix.IsMayInverse())
             {
-                throw new Exception("Матрица не имеет обратной формы");
+                throw new Exception("Матрица не обратима");
             }
+
+            // Транспонируем исходную матрицу
+            MyMatrix transposedMatrix = Transpose(matrix);
+
+            // Вычисляем элементы союзной матрицы как алгебраические дополнения транспонированной матрицы
+            double[,] friendArray = new double[transposedMatrix.Rows, transposedMatrix.Columns];
+            for (int i = 0; i < transposedMatrix.Rows; i++)
+            {
+                for (int j = 0; j < transposedMatrix.Columns; j++)
+                {
+                    double minor = transposedMatrix.DeleteRowAndColumn(i, j).GetDeterminante();
+                    double cofactor = minor * Math.Pow(-1, i + 1 + j + 1);
+                    friendArray[i, j] = cofactor;
+                }
+            }
+            MyMatrix friendMatrix = new MyMatrix(friendArray);
+
+            // Применить формулу: умножить число, обратное определителю матрицы A, на союзную матрицу
+            MyMatrix inverseMatrix = 1 / matrix.GetDeterminante() * friendMatrix;
+
+
+            return inverseMatrix;
         }
 
         public bool IsMayInverse()
@@ -216,7 +239,67 @@ namespace Matrix
                 return false;
             }
 
+            if (GetDeterminante() == 0)
+            {
+                return false;
+            }
+
             return true;
+        }
+
+        public double GetDeterminante()
+        {
+            double determinante = 0;
+
+            if (Rows == 3)
+            {
+                determinante = data[0, 0] * data[1, 1] * data[2, 2] -
+                               data[0, 0] * data[1, 2] * data[2, 1] -
+                               data[0, 1] * data[1, 0] * data[2, 2] +
+                               data[0, 1] * data[1, 2] * data[2, 0] +
+                               data[0, 2] * data[1, 0] * data[2, 1] -
+                               data[0, 2] * data[1, 1] * data[2, 0];
+            }
+            else
+            {
+                for (int j = 0; j < Columns; j++)
+                {
+                    double minor = this.DeleteRowAndColumn(0, j).GetDeterminante();
+                    double cofactor = minor * Math.Pow(-1, 1 + j + 1);
+                    determinante += cofactor * data[0, j];
+                }
+            }
+
+            return determinante;
+        }
+
+        public MyMatrix DeleteRowAndColumn(int rowIndex, int columnIndex)
+        {
+            double[,] array = data;
+            double[,] newArray = new double[Rows - 1, Columns - 1];
+
+            for (int i = 0, k = 0; i < Rows; i++, k++)
+            {
+                if (i == rowIndex)
+                {
+                    k--;
+                    continue;
+                }
+
+
+                for (int j = 0, l = 0; j < Columns; j++, l++)
+                {
+                    if (j == columnIndex)
+                    {
+                        l--;
+                        continue;
+                    }
+
+                    newArray[k, l] = array[i, j];
+                }
+            }
+
+            return new MyMatrix(newArray);
         }
 
         public override string ToString()
