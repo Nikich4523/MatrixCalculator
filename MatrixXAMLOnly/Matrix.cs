@@ -168,6 +168,57 @@ namespace Matrix
             return new MyMatrix(array);
         }
 
+        public static MyMatrix RowReplaceByVector(MyMatrix matrix, int[] vector)
+        {
+            int[] nowVector = new int[vector.Length];   // 0 1 2 3 4 - 4 1 2 3 0 - 4 1 0 3 2 - 4 1 0 2 3
+            for (int i = 0; i < nowVector.Length; i++)  // 4 1 0 2 3 - 4 1 0 2 3 - 4 1 0 2 3 - 4 1 0 2 3
+            {
+                nowVector[i] = i;
+            }
+
+            MyMatrix result = null; 
+            for (int i = 0; i < vector.Length; i++)
+            {
+                if (nowVector[i] != vector[i])
+                {
+                    int index = 0;
+                    for (int j = 0; j < vector.Length; j++)
+                    {
+                        if (nowVector[j] == vector[i])
+                        {
+                            index = j;
+                        }
+                    }
+
+                    result = MyMatrix.RowReplace(matrix, i, index);
+
+                    int boof = nowVector[i];
+                    nowVector[i] = nowVector[index];
+                    nowVector[index] = boof;
+                }
+            }
+
+            return result;
+        }
+
+        public static MyMatrix Inverse(MyMatrix matrix)
+        {
+            if (matrix.IsMayInverse())
+            {
+                throw new Exception("Матрица не имеет обратной формы");
+            }
+        }
+
+        public bool IsMayInverse()
+        {
+            if (Rows != Columns)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder("", Rows * Columns * 2);

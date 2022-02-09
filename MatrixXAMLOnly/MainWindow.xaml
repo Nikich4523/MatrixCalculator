@@ -129,7 +129,7 @@
                 <Button x:Name="BtnTransposition" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnTransposition_Click"/>
                 <Button x:Name="BtnMultiplicationOnTransposed" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnMultiplicationOnTransposed_Click"/>
                 <Button x:Name="BtnRowsReplace" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnRowsReplace_Click"/>
-                <Button x:Name="BtnRowsReplaceOnTranspositionVector" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnRowsReplaceOnTranspositionVector_Click"/>
+                <Button x:Name="BtnRowsTranspositionReplace" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnRowsTranspositionReplace_Click"/>
                 <Button x:Name="BtnInverse" Style="{StaticResource HamburgerMenuItemBtn}" Click="BtnInverse_Click"/>
             </StackPanel>
         </Grid>
@@ -543,12 +543,12 @@
 
                     <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock Text="Количество строк: "/>
-                        <TextBox x:Name="TextBoxRowReplaceRowCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                        <TextBox x:Name="TextBoxRowReplaceRowCount" Style="{StaticResource NonMatrix}" MaxLength="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                         <TextBlock Text="Количество столбцов: "/>
-                        <TextBox x:Name="TextBoxRowReplaceColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1"/>
+                        <TextBox x:Name="TextBoxRowReplaceColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     </StackPanel>
 
                     <Button x:Name="BtnRowReplaceCreateMatrix" Grid.Column="2" Content="Построить матрицу" Click="BtnRowReplaceCreateMatrix_Click"/>
@@ -573,15 +573,17 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
-                                <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBox x:Name="TextBoxRowReplaceFrstTerm" Grid.Row="0" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Bottom" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="SemiBold" MaxLength="2"/>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+                                <TextBox x:Name="TextBoxRowReplaceFrstTerm" Grid.Row="0" Grid.Column="0" Width="50" Height="50" FontSize="20" FontWeight="SemiBold" MaxLength="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                <TextBlock Text=" =>" Grid.Row="0" Grid.Column="1" Style="{StaticResource OperationSign}"/>
+                            </StackPanel>
 
-                            <TextBlock Text="=>" Grid.Row="1" Style="{StaticResource OperationSign}"/>
-
-                            <TextBox x:Name="TextBoxRowReplaceScndTerm" Grid.Row="2" Width="50" Height="50" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" FontWeight="SemiBold" MaxLength="2"/>
-
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="1">
+                                <TextBlock Text=" &lt;=" Grid.Row="0" Grid.Column="1" Style="{StaticResource OperationSign}"/>
+                                <TextBox x:Name="TextBoxRowReplaceScndTerm" Grid.Row="0" Grid.Column="0" Width="50" Height="50" FontSize="20" FontWeight="SemiBold" MaxLength="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                            </StackPanel>
                         </Grid>
 
                         <Grid x:Name="GridRowsReplaceResult" Grid.Column="2">
@@ -603,6 +605,86 @@
                 <Button x:Name="BtnRowsReplaceCalculate" Grid.Column="2" Content="Вычислить" Click="BtnRowsReplaceCalculate_Click"/>
             </Grid>
         </Grid> <!-- RowsReplace -->
+        
+        <!-- RowTranspositionReplace -->
+        <Grid x:Name="GridContentRowTranspositionReplace" Grid.RowSpan="3" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!-- UpperBody -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.1*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество строк: "/>
+                        <TextBox x:Name="TextBoxRowTranspositionReplaceRowCount" Style="{StaticResource NonMatrix}" MaxLength="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="Количество столбцов: "/>
+                        <TextBox x:Name="TextBoxRowTranspositionReplaceColumnCount" Style="{StaticResource NonMatrix}" MaxLength="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+
+                    <Button x:Name="BtnRowTranspositionReplaceCreateMatrix" Grid.Column="2" Content="Построить матрицу" Click="BtnRowTranspositionReplaceCreateMatrix_Click"/>
+                </Grid>
+            </Grid>
+
+            <!-- MidlleBody -->
+            <Grid Grid.Row="1">
+                <Border Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="0 1 0 1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition Width="0.3*"/>
+                            <ColumnDefinition Width="0.2*"/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid x:Name="GridRowTranspositionReplaceMatrix" Grid.Column="0">
+                            
+                        </Grid>
+
+                        <TextBlock Text="=>" Grid.Column="1" Style="{StaticResource OperationSign}"/>
+
+                        <Grid x:Name="GridRowTranspositionReplaceVector" Grid.Column="2">
+                            
+                        </Grid>
+
+                        <TextBlock Text="=>" Grid.Column="3" Style="{StaticResource OperationSign}"/>
+
+                        <Grid x:Name="GridRowTranspositionReplaceResult" Grid.Column="5">
+
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- BottomBody -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="BtnRowTranspositionReplaceDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnRowTranspositionReplaceCalculate" Grid.Column="2" Content="Вычислить" Click="BtnRowTranspositionReplaceCalculate_Click"/>
+            </Grid>
+        </Grid> <!-- RowTranspositionReplace -->
         
     </Grid>
 </Window>
