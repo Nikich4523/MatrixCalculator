@@ -21,15 +21,17 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="50 15 0 15">
-                    <ComboBox x:Name="ComboBoxOrientation" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" FontWeight="SemiBold" Margin="0 0 10 0" MinWidth="120">
+                    <ComboBox x:Name="ComboBoxOrientation" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" FontWeight="SemiBold" Margin="0 0 10 0" MinWidth="120" MaxHeight="60">
                         <ComboBoxItem Content="По строке:"/>
                         <ComboBoxItem Content="По столбцу:"/>
                     </ComboBox>
-                    <TextBox x:Name="TextBoxNum" MinWidth="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" MaxLength="1"/>
+                    <TextBox x:Name="TextBoxNum" MinWidth="50" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="14" MaxLength="1" MaxHeight="60"/>
                 </StackPanel>
 
-                <Button x:Name="BtnCreateDiagram" Content="Построить диаграмму" Grid.Column="1" Margin="10 15 50 15" MinWidth="200" HorizontalAlignment="Right"/>
+                <Button x:Name="BtnCreateDiagram" Content="Построить диаграмму" Grid.Column="1" Margin="10 15 50 15" MinWidth="200" MaxHeight="60" HorizontalAlignment="Right" Click="BtnCreateDiagram_Click"/>
             </Grid>
         </Border>
+
+        <lvc:PieChart x:Name="PieDiagram" Grid.Row="1" LegendLocation="Bottom" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding SeriesCollection}"/>
     </Grid>
 </Window>

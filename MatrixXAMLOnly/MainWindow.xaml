@@ -212,7 +212,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BtnAdditionDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnAdditionDiagramm" Grid.Column="1" Content="Диаграмма" Click="BtnAdditionDiagramm_Click"/>
                 <Button x:Name="BtnAdditionCalculate" Grid.Column="2" Content="Вычислить" Click="BtnAdditionCalculate_Click"/>
             </Grid>
         </Grid> <!-- Addition -->
@@ -292,7 +292,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BtnDifferenceDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnDifferenceDiagramm" Grid.Column="1" Content="Диаграмма" Click="BtnDifferenceDiagramm_Click"/>
                 <Button x:Name="BtnDifferenceCalculate" Grid.Column="2" Content="Вычислить" Click="BtnDifferenceCalculate_Click"/>
             </Grid>
         </Grid> <!-- Difference -->
@@ -370,7 +370,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BtnMultiplicationOnScalarnDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnMultiplicationOnScalarnDiagramm" Grid.Column="1" Content="Диаграмма" Click="BtnMultiplicationOnScalarnDiagramm_Click"/>
                 <Button x:Name="BtnMultiplicationOnScalarCalculate" Grid.Column="2" Content="Вычислить" Click="BtnMultiplicationOnScalarCalculate_Click"/>
             </Grid>
         </Grid> <!-- MultiplicationOnScalar -->
@@ -442,7 +442,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BtnTranspositionDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnTranspositionDiagramm" Grid.Column="1" Content="Диаграмма" Click="BtnTranspositionDiagramm_Click"/>
                 <Button x:Name="BtnTranspositionCalculate" Grid.Column="2" Content="Вычислить" Click="BtnTranspositionCalculate_Click"/>
             </Grid>
         </Grid> <!-- Transposition -->
@@ -514,7 +514,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BtnMultiplicationOnTransposedDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnMultiplicationOnTransposedDiagramm" Grid.Column="1" Content="Диаграмма" Click="BtnMultiplicationOnTransposedDiagramm_Click"/>
                 <Button x:Name="BtnMultiplicationOnTransposedCalculate" Grid.Column="2" Content="Вычислить" Click="BtnMultiplicationOnTransposedCalculate_Click"/>
             </Grid>
         </Grid> <!-- MultiplicationOnTransposed -->
@@ -601,7 +601,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BtnRowsReplaceDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnRowsReplaceDiagramm" Grid.Column="1" Content="Диаграмма" Click="BtnRowsReplaceDiagramm_Click"/>
                 <Button x:Name="BtnRowsReplaceCalculate" Grid.Column="2" Content="Вычислить" Click="BtnRowsReplaceCalculate_Click"/>
             </Grid>
         </Grid> <!-- RowsReplace -->
@@ -681,7 +681,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BtnRowTranspositionReplaceDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnRowTranspositionReplaceDiagramm" Grid.Column="1" Content="Диаграмма" Click="BtnRowTranspositionReplaceDiagramm_Click"/>
                 <Button x:Name="BtnRowTranspositionReplaceCalculate" Grid.Column="2" Content="Вычислить" Click="BtnRowTranspositionReplaceCalculate_Click"/>
             </Grid>
         </Grid> <!-- RowTranspositionReplace -->
@@ -753,7 +753,7 @@
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="BtnInverseeDiagramm" Grid.Column="1" Content="Диаграмма"/>
+                <Button x:Name="BtnInverseeDiagramm" Grid.Column="1" Content="Диаграмма" Click="BtnInverseeDiagramm_Click"/>
                 <Button x:Name="BtnInverseCalculate" Grid.Column="2" Content="Вычислить" Click="BtnInverseCalculate_Click"/>
             </Grid>
         </Grid> <!-- Inverse -->

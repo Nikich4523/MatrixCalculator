@@ -20,10 +20,6 @@ namespace MatrixXAMLOnly
         {
             InitializeComponent();
 
-            DiagramWindow wnd = new DiagramWindow();
-            wnd.Show();
-            Close();
-
             BtnAddition.Content = "Сложение матриц";
             BtnDifference.Content = "Вычитание матриц";
             BtnMultiplicationOnScalar.Content = "Умножение матрицы \nна скаляр";
@@ -407,6 +403,24 @@ namespace MatrixXAMLOnly
             GridAdditionScndTerm.Children.Add(CreateMatrix(rowCount, columnCount, false));
             GridAdditionResult.Children.Add(CreateMatrix(rowCount, columnCount, true));
         }
+
+        private void BtnAdditionDiagramm_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridAdditionResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridAdditionResult.Children[0]).ColumnDefinitions.Count;
+
+            double[,] result = new double[rowCount, columnCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    result[i, j] = Convert.ToDouble(((Grid)GridAdditionResult.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                }
+            }
+
+            DiagramWindow wnd = new DiagramWindow(new MyMatrix(result));
+            wnd.Show();
+        }
         #endregion
 
         #region Difference
@@ -470,6 +484,24 @@ namespace MatrixXAMLOnly
                     ((TextBox)((Grid)GridDifferenceResult.Children[0]).Children[(i * columnCount) + j]).Text = result.data[i, j].ToString();
                 }
             }
+        }
+
+        private void BtnDifferenceDiagramm_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridDifferenceResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridDifferenceResult.Children[0]).ColumnDefinitions.Count;
+
+            double[,] result = new double[rowCount, columnCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    result[i, j] = Convert.ToDouble(((Grid)GridDifferenceResult.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                }
+            }
+
+            DiagramWindow wnd = new DiagramWindow(new MyMatrix(result));
+            wnd.Show();
         }
         #endregion
 
@@ -541,6 +573,24 @@ namespace MatrixXAMLOnly
                 }
             }
         }
+
+        private void BtnMultiplicationOnScalarnDiagramm_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridMultiplicationOnScalarResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridMultiplicationOnScalarResult.Children[0]).ColumnDefinitions.Count;
+
+            double[,] result = new double[rowCount, columnCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    result[i, j] = Convert.ToDouble(((Grid)GridMultiplicationOnScalarResult.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                }
+            }
+
+            DiagramWindow wnd = new DiagramWindow(new MyMatrix(result));
+            wnd.Show();
+        }
         #endregion
 
         #region Transposition
@@ -599,6 +649,24 @@ namespace MatrixXAMLOnly
                     tb.Text = result.data[i, j].ToString();
                 }
             }
+        }
+
+        private void BtnTranspositionDiagramm_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridTransposed.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridTransposed.Children[0]).ColumnDefinitions.Count;
+
+            double[,] result = new double[rowCount, columnCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    result[i, j] = Convert.ToDouble(((Grid)GridTransposed.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                }
+            }
+
+            DiagramWindow wnd = new DiagramWindow(new MyMatrix(result));
+            wnd.Show();
         }
         #endregion
 
@@ -660,6 +728,24 @@ namespace MatrixXAMLOnly
                 }
             }
         }
+
+        private void BtnMultiplicationOnTransposedDiagramm_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridMultiplicationOnTransposedResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridMultiplicationOnTransposedResult.Children[0]).ColumnDefinitions.Count;
+
+            double[,] result = new double[rowCount, columnCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    result[i, j] = Convert.ToDouble(((Grid)GridMultiplicationOnTransposedResult.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                }
+            }
+
+            DiagramWindow wnd = new DiagramWindow(new MyMatrix(result));
+            wnd.Show();
+        }
         #endregion
 
         #region RowReplace
@@ -718,6 +804,24 @@ namespace MatrixXAMLOnly
                     ((TextBox)((Grid)GridRowsReplaceResult.Children[0]).Children[(i * columnCount) + j]).Text = result.data[i, j].ToString();
                 }
             }
+        }
+
+        private void BtnRowsReplaceDiagramm_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridRowsReplaceResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridRowsReplaceResult.Children[0]).ColumnDefinitions.Count;
+
+            double[,] result = new double[rowCount, columnCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    result[i, j] = Convert.ToDouble(((Grid)GridRowsReplaceResult.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                }
+            }
+
+            DiagramWindow wnd = new DiagramWindow(new MyMatrix(result));
+            wnd.Show();
         }
         #endregion
 
@@ -807,6 +911,24 @@ namespace MatrixXAMLOnly
             }
             
         }
+
+        private void BtnRowTranspositionReplaceDiagramm_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridRowTranspositionReplaceResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridRowTranspositionReplaceResult.Children[0]).ColumnDefinitions.Count;
+
+            double[,] result = new double[rowCount, columnCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    result[i, j] = Convert.ToDouble(((Grid)GridRowTranspositionReplaceResult.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                }
+            }
+
+            DiagramWindow wnd = new DiagramWindow(new MyMatrix(result));
+            wnd.Show();
+        }
         #endregion
 
         #region Inverse
@@ -874,6 +996,24 @@ namespace MatrixXAMLOnly
                     ((TextBox)((Grid)GridInverseResult.Children[0]).Children[(i * columnCount) + j]).Text = result.data[i, j].ToString();
                 }
             }
+        }
+
+        private void BtnInverseeDiagramm_Click(object sender, RoutedEventArgs e)
+        {
+            int rowCount = ((Grid)GridInverseResult.Children[0]).RowDefinitions.Count;
+            int columnCount = ((Grid)GridInverseResult.Children[0]).ColumnDefinitions.Count;
+
+            double[,] result = new double[rowCount, columnCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                for (int j = 0; j < columnCount; j++)
+                {
+                    result[i, j] = Convert.ToDouble(((Grid)GridInverseResult.Children[0]).Children.Cast<TextBox>().First(e => Grid.GetColumn(e) == j && Grid.GetRow(e) == i).Text);
+                }
+            }
+
+            DiagramWindow wnd = new DiagramWindow(new MyMatrix(result));
+            wnd.Show();
         }
         #endregion
     }

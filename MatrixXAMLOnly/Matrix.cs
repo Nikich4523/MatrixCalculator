@@ -228,7 +228,6 @@ namespace Matrix
             // Применить формулу: умножить число, обратное определителю матрицы A, на союзную матрицу
             MyMatrix inverseMatrix = 1 / matrix.GetDeterminante() * friendMatrix;
 
-
             return inverseMatrix;
         }
 
