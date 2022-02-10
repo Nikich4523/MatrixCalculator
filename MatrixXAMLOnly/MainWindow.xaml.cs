@@ -8,8 +8,9 @@ using Matrix;
 
 namespace MatrixXAMLOnly
 {
-    // TODO: Перепроверить все поля на валидацию
-    // TODO: Создание диаграмм
+    // TODO: Перепроверить все поля на валидацию (например, при создании диаграмм)
+    // TODO: Изменить кнопки
+    // TODO: Изменить при наведении в гамбургере
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
